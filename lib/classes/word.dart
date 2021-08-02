@@ -24,6 +24,6 @@ class Word {
 
   @override
   String toString() {
-    return 'Word{word: $word, phoneticsText: $phoneticsText, meaningsPartOfSpeech: $meaningsPartOfSpeech, meaningsDefinitions: $meaningsDefinitions, meaningsDefinitionsExample: $meaningsDefinitionsExample}';
+    return 'Word\n{\nword: $word,\n\n phoneticsText: $phoneticsText,\n\n meaningsPartOfSpeech: $meaningsPartOfSpeech,\n\n meaningsDefinitions: $meaningsDefinitions,\n\n meaningsDefinitionsExample: $meaningsDefinitionsExample \n}';
   }
 }
