@@ -21,7 +21,7 @@ ThemeData light = ThemeData(
     backgroundColor: Color(0xFFE5E5E5),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFFFFFFFF),
+      fillColor: Color(0xFFF1F1F1),
       focusColor: Colors.lightBlue[800],
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
@@ -54,13 +54,13 @@ ThemeData dark = ThemeData(
   accentColor: Color(0xFF725F5B),
   scaffoldBackgroundColor: Color(0xFF202022),
   cardTheme: CardTheme(
-    color: Color(0xFF303032),
+    color: Color(0xFF262628),
   ),
   dialogTheme: DialogTheme(
     backgroundColor: Color(0xFF303032),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFF353537),
+      fillColor: Color(0xFF262628),
       focusColor: Color(0xFF725F5B),
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(

@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 
 class SearchResult extends StatefulWidget {
   String searchedWord;
+  String language;
 
-  SearchResult({Key? key, required this.searchedWord}) : super(key: key);
+  SearchResult({Key? key, required this.searchedWord,required this.language}) : super(key: key);
 
   @override
   _SearchResultState createState() => _SearchResultState();
@@ -19,7 +20,7 @@ class _SearchResultState extends State<SearchResult> {
 
   @override
   void initState() {
-    urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/en_US/' +
+    urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/'+ widget.language+'/' +
         widget.searchedWord;
     searchWord();
     super.initState();

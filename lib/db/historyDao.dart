@@ -11,6 +11,7 @@ class HistoryDao {
   static final table = 'wordHistory';
   static final columnId = 'id';
   static final columnWord = 'word';
+  static final columnLanguage = 'language';
 
   static Database? _database;
   Future<Database> get database async =>
@@ -32,14 +33,15 @@ class HistoryDao {
     await db.execute('''
           CREATE TABLE $table (
            $columnId INTEGER PRIMARY KEY,            
-           $columnWord TEXT NOT NULL
+           $columnWord TEXT NOT NULL,
+           $columnLanguage TEXT NOT NULL
           )
           ''');
 
-    //max item size = 15
+    //max item size = 10
     Batch batch = db.batch();
-    for(int i = 1; i <= 15 ; i++) {
-      batch.insert('wordHistory', {'id': i, 'word': ' '});
+    for(int i = 1; i <= 10 ; i++) {
+      batch.insert('wordHistory', {'id': i, 'word': ' ','language':' '});
     }
     await batch.commit(noResult: true);
 

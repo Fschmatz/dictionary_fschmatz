@@ -1,15 +1,19 @@
 class Changelog{
 
-  static String appVersion = "0.5.0";
+  static String appVersion = "0.6.0";
   static String appName = "Dictionary Fschmatz";
 
   static String changelogCurrent = '''  
-0.5.0
-- Test Results UI
-- Open History Word onTap
+0.6.0
+- Added Language to DB
+- Removed Modal Bottom
 ''';
 
   static String changelogsOld = '''
+0.5.0
+- Test Results UI
+- Open History Word onTap
+
 0.4.0
 - DB History
 - History on Home
