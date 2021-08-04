@@ -109,6 +109,7 @@ class AppInfoPage extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
           ),
+          const SizedBox(height: 50,)
         ]));
   }
 }

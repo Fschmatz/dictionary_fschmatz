@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dictionary_fschmatz/classes/word.dart';
 import 'package:dictionary_fschmatz/configs/settingsPage.dart';
+import 'package:dictionary_fschmatz/db/historyDao.dart';
 import 'package:dictionary_fschmatz/pages/searchResult.dart';
+import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,31 +17,40 @@ class _HomeState extends State<Home> {
   //API PAGE
   //https://dictionaryapi.dev/
 
+  List<String> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
+  bool loadingHistory = true;
 
-  // PALAVRA DE TESTE 'HELLO' EM INGLES
-  String urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/en_US/hello';
-
-  //---- TESTES DELETAR DEPOIS
   @override
   void initState() {
-    //searchWord();
+    _getWordHistory(false);
     super.initState();
   }
 
-/*  Future<void> searchWord() async {
-    final response = await http.get(Uri.parse(urlApi));
-    if (response.statusCode == 200) {
-      Word w = Word.fromJSON(jsonDecode(response.body));
-      print(w.toString());
-      setState(() {
-        //loading = false;
-        //   eventsList = listaEvents;
-      });
-    }
-  }*/
+  void _saveWordHistory() async {
+    final dbHistory = HistoryDao.instance;
+    Map<String, dynamic> row = {
+      HistoryDao.columnWord: controllerTextWordSearch.text,
+    };
+    final id = await dbHistory.insert(row);
+  }
 
-  //---- TESTES DELETAR DEPOIS
+  Future<void> _getWordHistory(bool refresh) async {
+    final dbHistory = HistoryDao.instance;
+    var resp = await dbHistory.queryAllRowsDesc();
+
+    //CLEAR LIST
+    if (refresh) {
+      history.removeRange(0, history.length);
+    }
+
+    for (int i = 0; i < resp.length; i++) {
+      history.add(resp[i]['word']);
+    }
+    setState(() {
+      loadingHistory = false;
+    });
+  }
 
   void openBottomMenuSearch() {
     showModalBottomSheet(
@@ -81,15 +92,26 @@ class _HomeState extends State<Home> {
                           fontSize: 16,
                         ),
                         onEditingComplete: () {
-                          Navigator.of(context).pop();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) => SearchResult(
-                                    searchedWord:
-                                        controllerTextWordSearch.text),
-                                fullscreenDialog: true,
-                              ));
+                          if (controllerTextWordSearch.text.isNotEmpty) {
+                            _saveWordHistory();
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          SearchResult(
+                                              searchedWord:
+                                                  controllerTextWordSearch
+                                                      .text),
+                                      fullscreenDialog: true,
+                                    ))
+                                .then((value) => {
+                                      _getWordHistory(true),
+                                      controllerTextWordSearch.text = ''
+                                    });
+                          } else {
+                            Navigator.of(context).pop();
+                          }
                         }),
                   ),
                 ],
@@ -101,6 +123,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
+
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -109,25 +133,35 @@ class _HomeState extends State<Home> {
           ),
           body: ListView(physics: AlwaysScrollableScrollPhysics(), children: [
             ListTile(
-                leading: Icon(Icons.history_outlined),
+                leading: Icon(Icons.history_outlined, color: textAccent),
                 title: Text("History".toUpperCase(),
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
-                        color: Theme.of(context)
-                            .accentTextTheme
-                            .headline1!
-                            .color))),
-            ListView.separated(
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 12,
-              itemBuilder: (context, index) {
-                return ListTile(title: Text('Word ' + (index + 1).toString()));
-              },
-            ),
+                        color: textAccent))),
+            loadingHistory
+                ? SizedBox.shrink()
+                : ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Visibility(
+                      visible: history[index] != ' ',
+                      child: const Divider(
+                        height: 0,
+                      ),
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: history.length,
+                    itemBuilder: (context, index) {
+                      return Visibility(
+                        visible: history[index] != ' ',
+                        child: TileHistory(
+                          key: UniqueKey(),
+                          word: history[index],
+                        ),
+                      );
+                    },
+                  ),
             const SizedBox(
               height: 50,
             )
