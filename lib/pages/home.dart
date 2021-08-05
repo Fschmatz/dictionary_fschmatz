@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text('Dictionary'),
+          title: Text('Dictionary Fschmatz'),
           actions: [
             IconButton(
                 color: Theme.of(context)
@@ -106,10 +106,16 @@ class _HomeState extends State<Home> {
             children: [
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'en_US',
-                  child: Text('ENGLISH')),
+                  child: Text('EN-US')),
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'pt-BR',
                   child: Text('PT-BR')),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'es',
+                  child: Text('ES')),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'fr',
+                  child: Text('FR')),
             ],
           ),
           ListTile(
@@ -130,7 +136,8 @@ class _HomeState extends State<Home> {
                   fontSize: 16,
                 ),
                 decoration: InputDecoration(
-                    filled: true, prefixIcon: Icon(Icons.notes_outlined)),
+                    filled: true,
+                ),
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {
                     _saveWordHistory();

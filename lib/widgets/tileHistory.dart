@@ -12,6 +12,21 @@ class TileHistory extends StatefulWidget {
 }
 
 class _TileHistoryState extends State<TileHistory> {
+
+  String? getLanguagueFormatted(){
+    if(widget.language == 'en_US'){
+      return 'EN-US';
+    }
+    else if(widget.language == 'pt-BR'){
+      return 'PT-BR';
+    }
+    else if(widget.language == 'es'){
+      return 'ES';
+    }
+    else{
+      return 'FR';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -26,7 +41,7 @@ class _TileHistoryState extends State<TileHistory> {
       },
       contentPadding: const EdgeInsets.fromLTRB(16, 3, 16, 3),
       title: Text(widget.word),
-      trailing: widget.language == 'en_US' ?  Text('ENGLISH') : Text('PT-BR'),
+      trailing: Text(getLanguagueFormatted()!),
     );
   }
 }

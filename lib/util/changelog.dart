@@ -1,14 +1,19 @@
 class Changelog{
 
-  static String appVersion = "1.0.0";
+  static String appVersion = "1.1.0";
   static String appName = "Dictionary Fschmatz";
 
   static String changelogCurrent = '''  
-1.0.0
-- Technically Usable
+1.1.0
+- Added French
+- Added Spanish
+- Small UI Changes
 ''';
 
   static String changelogsOld = '''
+1.0.0
+- Technically Usable
+
 0.7.0
 - New Home
 - Change Language
