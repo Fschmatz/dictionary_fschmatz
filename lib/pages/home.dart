@@ -5,6 +5,8 @@ import 'package:dictionary_fschmatz/db/historyDao.dart';
 import 'package:dictionary_fschmatz/pages/searchResult.dart';
 import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
 import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
@@ -58,10 +60,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
 
-    return GestureDetector(
-      onTap: () {
-        loseFocus();
-      },
+    return FocusWatcher(
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -94,29 +93,29 @@ class _HomeState extends State<Home> {
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       color: textAccent))),
-          AnimatedButtonBar(
-            radius: 25,
-            padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
-            backgroundColor: Theme.of(context).cardTheme.color,
-            foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
-            elevation: 0,
-            borderWidth: 1,
-            borderColor: Colors.transparent,
-            innerVerticalPadding: 20,
-            children: [
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'en_US',
-                  child: Text('EN-US')),
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'pt-BR',
-                  child: Text('PT-BR')),
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'es',
-                  child: Text('ES')),
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'fr',
-                  child: Text('FR')),
-            ],
+          IgnoreFocusWatcher(
+            child: AnimatedButtonBar(
+              radius: 25,
+              padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+              backgroundColor: Theme.of(context).cardTheme.color,
+              foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
+              elevation: 0,
+              borderWidth: 1,
+              borderColor: Colors.transparent,
+              innerVerticalPadding: 17,
+              children: [
+                ButtonBarEntry(
+                    onTap: () => selectedLanguage = 'en_US',
+                    child: Text('EN-US')),
+                ButtonBarEntry(
+                    onTap: () => selectedLanguage = 'pt-BR',
+                    child: Text('PT-BR')),
+                ButtonBarEntry(
+                    onTap: () => selectedLanguage = 'es', child: Text('ES')),
+                ButtonBarEntry(
+                    onTap: () => selectedLanguage = 'fr', child: Text('FR')),
+              ],
+            ),
           ),
           ListTile(
               leading: Icon(Icons.search_outlined, color: textAccent),
@@ -125,18 +124,22 @@ class _HomeState extends State<Home> {
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       color: textAccent))),
-          ListTile(
-            contentPadding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
-            title: TextField(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+            child: TextField(
                 minLines: 1,
                 textCapitalization: TextCapitalization.sentences,
                 keyboardType: TextInputType.name,
                 controller: controllerTextWordSearch,
+                textAlign: TextAlign.center,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                ],
                 style: TextStyle(
                   fontSize: 16,
                 ),
                 decoration: InputDecoration(
-                    filled: true,
+                  filled: true,
                 ),
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {

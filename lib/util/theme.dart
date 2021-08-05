@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 ThemeData light = ThemeData(
   brightness: Brightness.light,
   primaryColor: Color(0xFFFFFFFF),
-  accentColor: Colors.lightGreen[800],
+  accentColor: Colors.lightGreen[700],
   scaffoldBackgroundColor: Color(0xFFFFFFFF),
   cardTheme: CardTheme(
     color: Color(0xFFF1F1F1),
@@ -22,24 +22,24 @@ ThemeData light = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
       fillColor: Color(0xFFF1F1F1),
-      focusColor: Colors.lightGreen[800],
+      focusColor: Colors.lightGreen[700],
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightGreen[800]!,
+          color: Colors.lightGreen[700]!,
         ),
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(25.0),
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(15.0)),
+          borderRadius: BorderRadius.circular(25.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(15.0))),
+          borderRadius: BorderRadius.circular(25.0))),
   accentTextTheme: TextTheme(
     headline1: TextStyle(color: Colors.lightGreen[700]),
     headline2: TextStyle(color: Color(0xFFF1F1F1)),
@@ -51,7 +51,7 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Color(0xFF202022),
-  accentColor: Color(0xFF76AC5B),//mrm=725F5B
+  accentColor: Color(0xFF76AC5B),
   scaffoldBackgroundColor: Color(0xFF202022),
   cardTheme: CardTheme(
     color: Color(0xFF303032),
@@ -67,18 +67,18 @@ ThemeData dark = ThemeData(
         borderSide: BorderSide(
           color: Color(0xFF76AC5B),
         ),
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(25.0),
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(20.0)),
+          borderRadius: BorderRadius.circular(25.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(20.0))),
+          borderRadius: BorderRadius.circular(25.0))),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: Color(0xFFA590D5)),
     selectedLabelStyle: TextStyle(color: Color(0xFFA590D5)),

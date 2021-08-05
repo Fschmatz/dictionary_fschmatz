@@ -8,6 +8,8 @@ class Changelog{
 - Added French
 - Added Spanish
 - Small UI Changes
+- Added Focus Watcher to Home
+- Allow Only Letters on Search TextField
 ''';
 
   static String changelogsOld = '''
