@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 ThemeData light = ThemeData(
   brightness: Brightness.light,
   primaryColor: Color(0xFFFFFFFF),
-  accentColor: Colors.lightBlue[800],
+  accentColor: Colors.lightGreen[800],
   scaffoldBackgroundColor: Color(0xFFFFFFFF),
   cardTheme: CardTheme(
     color: Color(0xFFF1F1F1),
@@ -22,26 +22,26 @@ ThemeData light = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
       fillColor: Color(0xFFF1F1F1),
-      focusColor: Colors.lightBlue[800],
+      focusColor: Colors.lightGreen[800],
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightBlue[800]!,
+          color: Colors.lightGreen[800]!,
         ),
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(15.0),
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey[800]!,
           ),
-          borderRadius: BorderRadius.circular(10.0)),
+          borderRadius: BorderRadius.circular(15.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey[800]!,
           ),
-          borderRadius: BorderRadius.circular(10.0))),
+          borderRadius: BorderRadius.circular(15.0))),
   accentTextTheme: TextTheme(
-    headline1: TextStyle(color: Colors.lightBlue[700]),
+    headline1: TextStyle(color: Colors.lightGreen[700]),
     headline2: TextStyle(color: Color(0xFFF1F1F1)),
   ),
   bottomAppBarColor: Color(0xFFE6E6E6),
@@ -51,34 +51,34 @@ ThemeData light = ThemeData(
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Color(0xFF202022),
-  accentColor: Color(0xFF725F5B),
+  accentColor: Color(0xFF76AC5B),//mrm=725F5B
   scaffoldBackgroundColor: Color(0xFF202022),
   cardTheme: CardTheme(
-    color: Color(0xFF262628),
+    color: Color(0xFF29292B),
   ),
   dialogTheme: DialogTheme(
     backgroundColor: Color(0xFF303032),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFF262628),
-      focusColor: Color(0xFF725F5B),
+      fillColor: Color(0xFF29292B),
+      focusColor: Color(0xFF76AC5B),
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Color(0xFF725F5B),
+          color: Color(0xFF76AC5B),
         ),
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey[800]!,
           ),
-          borderRadius: BorderRadius.circular(10.0)),
+          borderRadius: BorderRadius.circular(20.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey[800]!,
           ),
-          borderRadius: BorderRadius.circular(10.0))),
+          borderRadius: BorderRadius.circular(20.0))),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: Color(0xFFA590D5)),
     selectedLabelStyle: TextStyle(color: Color(0xFFA590D5)),
@@ -89,7 +89,7 @@ ThemeData dark = ThemeData(
 
   bottomAppBarColor: Color(0xFF151517),
   accentTextTheme: TextTheme(
-    headline1: TextStyle(color: Color(0xFFa8938f)),
+    headline1: TextStyle(color: Color(0xFFA1CF8A)),
     headline2: TextStyle(color: Color(0xFF000000)),
   ),
 );

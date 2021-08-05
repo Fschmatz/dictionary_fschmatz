@@ -26,7 +26,7 @@ class _TileHistoryState extends State<TileHistory> {
       },
       contentPadding: const EdgeInsets.fromLTRB(16, 3, 16, 3),
       title: Text(widget.word),
-      trailing: Text(widget.language),
+      trailing: widget.language == 'en_US' ?  Text('ENGLISH') : Text('PT-BR'),
     );
   }
 }

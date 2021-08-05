@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AppInfoPage extends StatelessWidget {
   _launchGithub() {
-    const url = '';
+    const url = 'https://github.com/Fschmatz/dictionary_fschmatz';
     launch(url);
   }
 
@@ -21,7 +21,7 @@ class AppInfoPage extends StatelessWidget {
           const SizedBox(height: 20),
           CircleAvatar(
             radius: 55,
-            backgroundColor: Colors.lightGreen,
+            backgroundColor: Colors.brown,
             child: CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('assets/avatar.jpg'),
@@ -79,7 +79,7 @@ class AppInfoPage extends StatelessWidget {
                     color: accentText)),
           ),
           ListTile(
-            //onTap: () {_launchGithub();},
+            onTap: () {_launchGithub();},
             leading: Icon(Icons.open_in_new_outlined),
             title: Text("View on GitHub",
                 style: TextStyle(
