@@ -32,12 +32,12 @@ ThemeData light = ThemeData(
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[800]!,
+            color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(15.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[800]!,
+            color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(15.0))),
   accentTextTheme: TextTheme(
@@ -54,13 +54,13 @@ ThemeData dark = ThemeData(
   accentColor: Color(0xFF76AC5B),//mrm=725F5B
   scaffoldBackgroundColor: Color(0xFF202022),
   cardTheme: CardTheme(
-    color: Color(0xFF29292B),
+    color: Color(0xFF303032),
   ),
   dialogTheme: DialogTheme(
     backgroundColor: Color(0xFF303032),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFF29292B),
+      fillColor: Color(0xFF303032),
       focusColor: Color(0xFF76AC5B),
       contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
@@ -71,12 +71,12 @@ ThemeData dark = ThemeData(
       ),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[800]!,
+            color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(20.0)),
       border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[800]!,
+            color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(20.0))),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(

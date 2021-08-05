@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
   bool loadingHistory = true;
+
   //Always Start with English
   String selectedLanguage = 'en_US';
 
@@ -85,7 +86,7 @@ class _HomeState extends State<Home> {
                 }),
           ],
         ),
-        body: ListView(physics: NeverScrollableScrollPhysics(), children: [
+        body: ListView(physics: AlwaysScrollableScrollPhysics(), children: [
           ListTile(
               leading: Icon(Icons.language_outlined, color: textAccent),
               title: Text("Language".toUpperCase(),
@@ -97,14 +98,18 @@ class _HomeState extends State<Home> {
             radius: 25,
             padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
             backgroundColor: Theme.of(context).cardTheme.color,
-            foregroundColor:Theme.of(context).accentColor.withOpacity(0.8),
+            foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
             elevation: 0,
             borderWidth: 1,
-            borderColor: Colors.grey[800]!,
+            borderColor: Colors.transparent,
             innerVerticalPadding: 20,
             children: [
-              ButtonBarEntry(onTap: () => selectedLanguage = 'en_US', child: Text('ENGLISH')),
-              ButtonBarEntry(onTap: () => selectedLanguage = 'pt-BR',  child: Text('PT-BR')),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'en_US',
+                  child: Text('ENGLISH')),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'pt-BR',
+                  child: Text('PT-BR')),
             ],
           ),
           ListTile(
@@ -125,8 +130,7 @@ class _HomeState extends State<Home> {
                   fontSize: 16,
                 ),
                 decoration: InputDecoration(
-                    filled: true,
-                    prefixIcon: Icon(Icons.notes_outlined)),
+                    filled: true, prefixIcon: Icon(Icons.notes_outlined)),
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {
                     _saveWordHistory();
@@ -163,7 +167,7 @@ class _HomeState extends State<Home> {
                       height: 0,
                     ),
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: history.length,
                   itemBuilder: (context, index) {
