@@ -20,7 +20,8 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
   bool loadingHistory = true;
-  TextStyle styleButtonsLang = TextStyle(fontSize: 13.5,fontWeight: FontWeight.w600);
+  TextStyle styleButtonsLang =
+      TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600);
 
   //Always Start with English
   String selectedLanguage = 'en_US';
@@ -46,6 +47,7 @@ class _HomeState extends State<Home> {
 
     return FocusWatcher(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0,
           title: Text('Dictionary Fschmatz'),
@@ -90,16 +92,16 @@ class _HomeState extends State<Home> {
               children: [
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'en_US',
-                    child: Text('EN-US',style: styleButtonsLang)),
+                    child: Text('EN-US', style: styleButtonsLang)),
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'pt-BR',
-                    child: Text('PT-BR',style: styleButtonsLang)),
+                    child: Text('PT-BR', style: styleButtonsLang)),
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'es',
-                    child: Text('ES',style: styleButtonsLang)),
+                    child: Text('ES', style: styleButtonsLang)),
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'fr',
-                    child: Text('FR',style: styleButtonsLang)),
+                    child: Text('FR', style: styleButtonsLang)),
               ],
             ),
           ),
@@ -153,27 +155,31 @@ class _HomeState extends State<Home> {
                       color: textAccent))),
           loadingHistory
               ? SizedBox.shrink()
-              : ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Visibility(
-                    visible: history[index]['word'] != ' ',
-                    child: const Divider(
-                      height: 0,
-                    ),
-                  ),
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: history.length,
-                  itemBuilder: (context, index) {
-                    return Visibility(
-                      visible: history[index]['word'] != ' ',
-                      child: TileHistory(
-                        key: UniqueKey(),
-                        word: history[index]['word'],
-                        language: history[index]['language'],
+              : Column(
+                  children: [
+                    ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Visibility(
+                        visible: history[index]['word'] != ' ',
+                        child: const Divider(
+                          height: 0,
+                        ),
                       ),
-                    );
-                  },
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: history.length,
+                      itemBuilder: (context, index) {
+                        return Visibility(
+                          visible: history[index]['word'] != ' ',
+                          child: TileHistory(
+                            key: UniqueKey(),
+                            word: history[index]['word'],
+                            language: history[index]['language'],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
           const SizedBox(
             height: 50,
