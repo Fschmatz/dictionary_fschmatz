@@ -7,7 +7,6 @@ import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
-import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   @override
@@ -21,6 +20,7 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
   bool loadingHistory = true;
+  TextStyle styleButtonsLang = TextStyle(fontSize: 13.5,fontWeight: FontWeight.w600);
 
   //Always Start with English
   String selectedLanguage = 'en_US';
@@ -31,15 +31,6 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  void _saveWordHistory() async {
-    final dbHistory = HistoryDao.instance;
-    Map<String, dynamic> row = {
-      HistoryDao.columnWord: controllerTextWordSearch.text,
-      HistoryDao.columnLanguage: selectedLanguage,
-    };
-    final id = await dbHistory.insert(row);
-  }
-
   Future<void> _getWordHistory() async {
     final dbHistory = HistoryDao.instance;
     var resp = await dbHistory.queryAllRowsDesc();
@@ -47,13 +38,6 @@ class _HomeState extends State<Home> {
       history = resp;
       loadingHistory = false;
     });
-  }
-
-  void loseFocus() {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
   }
 
   @override
@@ -106,14 +90,16 @@ class _HomeState extends State<Home> {
               children: [
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'en_US',
-                    child: Text('EN-US')),
+                    child: Text('EN-US',style: styleButtonsLang)),
                 ButtonBarEntry(
                     onTap: () => selectedLanguage = 'pt-BR',
-                    child: Text('PT-BR')),
+                    child: Text('PT-BR',style: styleButtonsLang)),
                 ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'es', child: Text('ES')),
+                    onTap: () => selectedLanguage = 'es',
+                    child: Text('ES',style: styleButtonsLang)),
                 ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'fr', child: Text('FR')),
+                    onTap: () => selectedLanguage = 'fr',
+                    child: Text('FR',style: styleButtonsLang)),
               ],
             ),
           ),
@@ -143,8 +129,6 @@ class _HomeState extends State<Home> {
                 ),
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {
-                    _saveWordHistory();
-                    loseFocus();
                     Navigator.push(
                             context,
                             MaterialPageRoute<void>(

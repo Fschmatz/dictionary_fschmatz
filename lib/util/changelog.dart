@@ -10,6 +10,7 @@ class Changelog{
 - Small UI Changes
 - Added Focus Watcher to Home
 - Allow Only Letters on Search TextField
+- Don't Save Invalid Words on History
 ''';
 
   static String changelogsOld = '''

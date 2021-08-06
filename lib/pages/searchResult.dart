@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:dictionary_fschmatz/classes/word.dart';
+import 'package:dictionary_fschmatz/db/historyDao.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class SearchResult extends StatefulWidget {
@@ -14,27 +16,42 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
-  String urlApi = '';
+  String urlApiSearch = 'https://api.dictionaryapi.dev/api/v2/entries/';
   bool loading = true;
   Word? searchedWordData;
 
   @override
   void initState() {
-    urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/'+ widget.language+'/' +
-        widget.searchedWord;
-    searchWord();
+    urlApiSearch += widget.language + '/' + widget.searchedWord;
+    _searchWord();
     super.initState();
   }
 
-  Future<void> searchWord() async {
-    final response = await http.get(Uri.parse(urlApi));
+  Future<void> _searchWord() async {
+    final response = await http.get(Uri.parse(urlApiSearch));
     if (response.statusCode == 200) {
       Word w = Word.fromJSON(jsonDecode(response.body));
       setState(() {
         searchedWordData = w;
+        _saveWordToHistory();
         loading = false;
       });
+    }else{
+      Navigator.of(context).pop();
+      Fluttertoast.showToast(
+          msg: "Word Not Found",
+          toastLength: Toast.LENGTH_SHORT,
+      );
     }
+  }
+
+  void _saveWordToHistory() async {
+    final dbHistory = HistoryDao.instance;
+    Map<String, dynamic> row = {
+      HistoryDao.columnWord: widget.searchedWord,
+      HistoryDao.columnLanguage: widget.language,
+    };
+    final id = await dbHistory.insert(row);
   }
 
   @override
