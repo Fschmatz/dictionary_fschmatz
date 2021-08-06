@@ -33,7 +33,6 @@ dependencies:
   dynamic_value:
   sqflite:
   animated_button_bar:
-  flutter_focus_watcher:
   fluttertoast:
 
   # The following adds the Cupertino Icons font to your application.

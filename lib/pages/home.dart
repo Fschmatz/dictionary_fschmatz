@@ -6,7 +6,6 @@ import 'package:dictionary_fschmatz/pages/searchResult.dart';
 import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -41,13 +40,23 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _loseFocus() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
 
-    return FocusWatcher(
+    return GestureDetector(
+      onTap: () {
+        _loseFocus();
+      },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+
         appBar: AppBar(
           elevation: 0,
           title: Text('Dictionary Fschmatz'),
@@ -79,31 +88,29 @@ class _HomeState extends State<Home> {
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       color: textAccent))),
-          IgnoreFocusWatcher(
-            child: AnimatedButtonBar(
-              radius: 25,
-              padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
-              backgroundColor: Theme.of(context).cardTheme.color,
-              foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
-              elevation: 0,
-              borderWidth: 1,
-              borderColor: Colors.transparent,
-              innerVerticalPadding: 17,
-              children: [
-                ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'en_US',
-                    child: Text('EN-US', style: styleButtonsLang)),
-                ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'pt-BR',
-                    child: Text('PT-BR', style: styleButtonsLang)),
-                ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'es',
-                    child: Text('ES', style: styleButtonsLang)),
-                ButtonBarEntry(
-                    onTap: () => selectedLanguage = 'fr',
-                    child: Text('FR', style: styleButtonsLang)),
-              ],
-            ),
+          AnimatedButtonBar(
+            radius: 25,
+            padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+            backgroundColor: Theme.of(context).cardTheme.color,
+            foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
+            elevation: 0,
+            borderWidth: 1,
+            borderColor: Colors.transparent,
+            innerVerticalPadding: 17,
+            children: [
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'en_US',
+                  child: Text('EN-US', style: styleButtonsLang)),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'pt-BR',
+                  child: Text('PT-BR', style: styleButtonsLang)),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'es',
+                  child: Text('ES', style: styleButtonsLang)),
+              ButtonBarEntry(
+                  onTap: () => selectedLanguage = 'fr',
+                  child: Text('FR', style: styleButtonsLang)),
+            ],
           ),
           ListTile(
               leading: Icon(Icons.search_outlined, color: textAccent),
@@ -120,17 +127,15 @@ class _HomeState extends State<Home> {
                 keyboardType: TextInputType.name,
                 controller: controllerTextWordSearch,
                 textAlign: TextAlign.center,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
-                ],
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                 ),
                 decoration: InputDecoration(
                   filled: true,
                 ),
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {
+                    _loseFocus();
                     Navigator.push(
                             context,
                             MaterialPageRoute<void>(
@@ -175,6 +180,7 @@ class _HomeState extends State<Home> {
                             key: UniqueKey(),
                             word: history[index]['word'],
                             language: history[index]['language'],
+                            loseFocus: _loseFocus,
                           ),
                         );
                       },
