@@ -5,12 +5,14 @@ class TileHistory extends StatefulWidget {
   String word;
   String language;
   Function() loseFocus;
+  Function(String, String, bool) search;
 
   TileHistory(
       {Key? key,
       required this.word,
       required this.language,
-      required this.loseFocus})
+      required this.loseFocus,
+      required this.search})
       : super(key: key);
 
   @override
@@ -34,13 +36,8 @@ class _TileHistoryState extends State<TileHistory> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => SearchResult(
-                  searchedWord: widget.word, language: widget.language),
-              fullscreenDialog: true,
-            ));
+        widget.search(widget.language, widget.word, true);
+        widget.loseFocus();
       },
       contentPadding: const EdgeInsets.fromLTRB(16, 3, 16, 3),
       title: Text(widget.word),

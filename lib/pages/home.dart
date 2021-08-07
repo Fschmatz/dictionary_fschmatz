@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:animated_button_bar/animated_button_bar.dart';
+import 'package:dictionary_fschmatz/classes/word.dart';
 import 'package:dictionary_fschmatz/configs/settingsPage.dart';
 import 'package:dictionary_fschmatz/db/historyDao.dart';
 import 'package:dictionary_fschmatz/pages/searchResult.dart';
 import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   @override
@@ -16,19 +20,68 @@ class _HomeState extends State<Home> {
   //API PAGE
   //https://dictionaryapi.dev/
 
+  String selectedLanguage = 'en_US'; //Always Start with English
   List<Map<String, dynamic>> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
+  String urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/';
+  String urlSearch = '';
+  bool loadingSearch = false;
   bool loadingHistory = true;
+  Word? searchedWordData;
   TextStyle styleButtonsLang =
-      TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600);
-
-  //Always Start with English
-  String selectedLanguage = 'en_US';
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w700);
 
   @override
   void initState() {
     _getWordHistory();
     super.initState();
+  }
+
+  Future<void> _searchWord(String lang, String word,bool fromHistory) async {
+    setState(() {
+      loadingSearch = true;
+    });
+
+    urlSearch = urlApi  + lang + '/' + word;
+
+    final response = await http.get(Uri.parse(urlSearch));
+    if (response.statusCode == 200) {
+      Word wordData = Word.fromJSON(jsonDecode(response.body));
+      if(!fromHistory){_saveWordToHistory();}
+      setState(() {
+        searchedWordData = wordData;
+        loadingSearch = false;
+        urlSearch = '';
+      });
+      //OPEN SEARCH RESULTS
+      Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    SearchResult(searchedWord: searchedWordData!),
+                fullscreenDialog: true,
+              ))
+          .then((value) =>
+              {_getWordHistory(), controllerTextWordSearch.text = ''});
+    } else {
+      setState(() {
+        loadingSearch = false;
+        urlSearch = '';
+      });
+      Fluttertoast.showToast(
+        msg: "Word Not Found",
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+  }
+
+  void _saveWordToHistory() async {
+    final dbHistory = HistoryDao.instance;
+    Map<String, dynamic> row = {
+      HistoryDao.columnWord: controllerTextWordSearch.text,
+      HistoryDao.columnLanguage: selectedLanguage,
+    };
+    final id = await dbHistory.insert(row);
   }
 
   Future<void> _getWordHistory() async {
@@ -56,10 +109,20 @@ class _HomeState extends State<Home> {
         _loseFocus();
       },
       child: Scaffold(
-
         appBar: AppBar(
           elevation: 0,
           title: Text('Dictionary Fschmatz'),
+          bottom: PreferredSize(
+              preferredSize: Size(double.infinity, 3),
+              child: loadingSearch
+                  ? LinearProgressIndicator(
+                      minHeight: 3,
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).accentColor.withOpacity(0.8)),
+                      backgroundColor:
+                          Theme.of(context).accentColor.withOpacity(0.3),
+                    )
+                  : SizedBox(height: 3,)),
           actions: [
             IconButton(
                 color: Theme.of(context)
@@ -96,7 +159,7 @@ class _HomeState extends State<Home> {
             elevation: 0,
             borderWidth: 1,
             borderColor: Colors.transparent,
-            innerVerticalPadding: 17,
+            innerVerticalPadding: 18,
             children: [
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'en_US',
@@ -136,18 +199,8 @@ class _HomeState extends State<Home> {
                 onEditingComplete: () {
                   if (controllerTextWordSearch.text.isNotEmpty) {
                     _loseFocus();
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) => SearchResult(
-                                  searchedWord: controllerTextWordSearch.text,
-                                  language: selectedLanguage),
-                              fullscreenDialog: true,
-                            ))
-                        .then((value) => {
-                              _getWordHistory(),
-                              controllerTextWordSearch.text = ''
-                            });
+                    _searchWord(
+                        selectedLanguage, controllerTextWordSearch.text,false);
                   }
                 }),
           ),
@@ -181,6 +234,7 @@ class _HomeState extends State<Home> {
                             word: history[index]['word'],
                             language: history[index]['language'],
                             loseFocus: _loseFocus,
+                            search: _searchWord,
                           ),
                         );
                       },
