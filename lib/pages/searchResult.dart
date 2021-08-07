@@ -22,7 +22,7 @@ class _SearchResultState extends State<SearchResult> {
   Widget showTextFromJson(
       String text,String sectionName, TextStyle textWithColor, bool showDivider) {
     return Visibility(
-      visible: text != 'null',
+      visible: text.isNotEmpty && text != 'null',
       child: Column(
         children: [
           Visibility(visible: showDivider, child: const Divider()),
@@ -36,7 +36,7 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
-    TextStyle textWithColor =
+    TextStyle styleTextWithColor =
         TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textAccent);
 
     return Scaffold(
@@ -48,15 +48,18 @@ class _SearchResultState extends State<SearchResult> {
         duration: Duration(milliseconds: 600),
         child: ListView(
           children: [
-            showTextFromJson(searchedWordData!.word,'Word', textWithColor, false),
+            showTextFromJson(searchedWordData!.word,'Word', styleTextWithColor, false),
             showTextFromJson(
-                searchedWordData!.phoneticsText,'Phonetics', textWithColor, true),
+                searchedWordData!.phoneticsText,'Phonetics', styleTextWithColor, true),
             showTextFromJson(
-                searchedWordData!.meaningsPartOfSpeech,'Part of Speech', textWithColor, true),
+                searchedWordData!.meaningsPartOfSpeech,'Part of Speech', styleTextWithColor, true),
             showTextFromJson(
-                searchedWordData!.meaningsDefinitions,'Definitions', textWithColor, true),
+                searchedWordData!.meaningsDefinitions,'Definitions', styleTextWithColor, true),
             showTextFromJson(searchedWordData!.meaningsDefinitionsExample,'Definition Example',
-                textWithColor, true),
+                styleTextWithColor, true),//synonyms
+            showTextFromJson(searchedWordData!.formattedSynonymsList().toString(),'Synonyms',
+                styleTextWithColor, true),
+            const SizedBox(height: 50,)
           ],
         ),
       ),

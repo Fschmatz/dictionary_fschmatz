@@ -24,12 +24,11 @@ class _HomeState extends State<Home> {
   List<Map<String, dynamic>> history = [];
   TextEditingController controllerTextWordSearch = TextEditingController();
   String urlApi = 'https://api.dictionaryapi.dev/api/v2/entries/';
-  String urlSearch = '';
   bool loadingSearch = false;
   bool loadingHistory = true;
   Word? searchedWordData;
   TextStyle styleButtonsLang =
-      TextStyle(fontSize: 13, fontWeight: FontWeight.w700);
+      TextStyle(fontSize: 13);
 
   @override
   void initState() {
@@ -42,16 +41,13 @@ class _HomeState extends State<Home> {
       loadingSearch = true;
     });
 
-    urlSearch = urlApi  + lang + '/' + word;
-
-    final response = await http.get(Uri.parse(urlSearch));
+    final response = await http.get(Uri.parse(urlApi  + lang + '/' + word));
     if (response.statusCode == 200) {
       Word wordData = Word.fromJSON(jsonDecode(response.body));
       if(!fromHistory){_saveWordToHistory();}
       setState(() {
         searchedWordData = wordData;
         loadingSearch = false;
-        urlSearch = '';
       });
       //OPEN SEARCH RESULTS
       Navigator.push(
@@ -66,7 +62,6 @@ class _HomeState extends State<Home> {
     } else {
       setState(() {
         loadingSearch = false;
-        urlSearch = '';
       });
       Fluttertoast.showToast(
         msg: "Word Not Found",
@@ -159,7 +154,7 @@ class _HomeState extends State<Home> {
             elevation: 0,
             borderWidth: 1,
             borderColor: Colors.transparent,
-            innerVerticalPadding: 18,
+            innerVerticalPadding: 18.1,
             children: [
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'en_US',
@@ -187,7 +182,6 @@ class _HomeState extends State<Home> {
             child: TextField(
                 minLines: 1,
                 textCapitalization: TextCapitalization.sentences,
-                keyboardType: TextInputType.name,
                 controller: controllerTextWordSearch,
                 textAlign: TextAlign.center,
                 style: TextStyle(

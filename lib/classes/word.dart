@@ -6,8 +6,9 @@ class Word {
   final String meaningsPartOfSpeech;
   final String meaningsDefinitions;
   final String meaningsDefinitionsExample;
+  final List<String>? synonyms;
 
-  Word({required this.word,required this.phoneticsText,required this.meaningsPartOfSpeech,required this.meaningsDefinitions,required this.meaningsDefinitionsExample });
+  Word({required this.word,required this.phoneticsText,required this.meaningsPartOfSpeech,required this.meaningsDefinitions,required this.meaningsDefinitionsExample,required this.synonyms });
 
   factory Word.fromJSON(dynamic json) {
 
@@ -19,11 +20,11 @@ class Word {
       meaningsPartOfSpeech: value[0]['meanings'][0]['partOfSpeech'].toString(),
       meaningsDefinitions:  value[0]['meanings'][0]['definitions'][0]['definition'].toString(),
       meaningsDefinitionsExample: value[0]['meanings'][0]['definitions'][0]['example'].toString(),
+      synonyms: value[0]['meanings'][1]['definitions'][0]['synonyms'].toList<String>(),
     );
   }
 
-  @override
-  String toString() {
-    return 'Word\n{\nword: $word,\n\n phoneticsText: $phoneticsText,\n\n meaningsPartOfSpeech: $meaningsPartOfSpeech,\n\n meaningsDefinitions: $meaningsDefinitions,\n\n meaningsDefinitionsExample: $meaningsDefinitionsExample \n}';
+  String formattedSynonymsList(){
+    return '$synonyms'.replaceAll('[', '').replaceAll(']', '');
   }
 }
