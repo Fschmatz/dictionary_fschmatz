@@ -23,9 +23,11 @@ class _TileHistoryState extends State<TileHistory> {
   String? getLanguagueFormatted() {
     if (widget.language == 'en_US') {
       return 'EN-US';
-    } else if (widget.language == 'pt-BR') {
+    }
+    /*else if (widget.language == 'pt-BR') {
       return 'PT-BR';
-    } else if (widget.language == 'es') {
+    } */
+    else if (widget.language == 'es') {
       return 'ES';
     } else {
       return 'FR';

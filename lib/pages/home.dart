@@ -129,6 +129,7 @@ class _HomeState extends State<Home> {
                   Icons.settings_outlined,
                 ),
                 onPressed: () {
+                  _loseFocus();
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
@@ -159,9 +160,9 @@ class _HomeState extends State<Home> {
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'en_US',
                   child: Text('EN-US', style: styleButtonsLang)),
-              ButtonBarEntry(
+              /*ButtonBarEntry(
                   onTap: () => selectedLanguage = 'pt-BR',
-                  child: Text('PT-BR', style: styleButtonsLang)),
+                  child: Text('PT-BR', style: styleButtonsLang)),*/
               ButtonBarEntry(
                   onTap: () => selectedLanguage = 'es',
                   child: Text('ES', style: styleButtonsLang)),
