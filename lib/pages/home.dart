@@ -4,14 +4,16 @@ import 'package:animated_button_bar/animated_button_bar.dart';
 import 'package:dictionary_fschmatz/classes/word.dart';
 import 'package:dictionary_fschmatz/configs/settingsPage.dart';
 import 'package:dictionary_fschmatz/db/historyDao.dart';
-import 'package:dictionary_fschmatz/pages/searchResult.dart';
-import 'package:dictionary_fschmatz/widgets/tileHistory.dart';
+import 'package:dictionary_fschmatz/pages/search_result.dart';
+import 'package:dictionary_fschmatz/widgets/tile_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -28,7 +30,7 @@ class _HomeState extends State<Home> {
   bool loadingHistory = true;
   Word? searchedWordData;
   TextStyle styleButtonsLang =
-      TextStyle(fontSize: 13);
+      const TextStyle(fontSize: 13);
 
   @override
   void initState() {
@@ -105,19 +107,18 @@ class _HomeState extends State<Home> {
       },
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          title: Text('Dictionary Fschmatz'),
+          title: const Text('Dictionary Fschmatz'),
           bottom: PreferredSize(
-              preferredSize: Size(double.infinity, 3),
+              preferredSize: const Size(double.infinity, 3),
               child: loadingSearch
                   ? LinearProgressIndicator(
                       minHeight: 3,
-                      valueColor: new AlwaysStoppedAnimation<Color>(
+                      valueColor: AlwaysStoppedAnimation<Color>(
                           Theme.of(context).accentColor.withOpacity(0.8)),
                       backgroundColor:
                           Theme.of(context).accentColor.withOpacity(0.3),
                     )
-                  : SizedBox(height: 3,)),
+                  : const SizedBox(height: 3,)),
           actions: [
             IconButton(
                 color: Theme.of(context)
@@ -125,7 +126,7 @@ class _HomeState extends State<Home> {
                     .headline6!
                     .color!
                     .withOpacity(0.8),
-                icon: Icon(
+                icon: const Icon(
                   Icons.settings_outlined,
                 ),
                 onPressed: () {
@@ -139,7 +140,7 @@ class _HomeState extends State<Home> {
                 }),
           ],
         ),
-        body: ListView(physics: AlwaysScrollableScrollPhysics(), children: [
+        body: ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
           ListTile(
               leading: Icon(Icons.language_outlined, color: textAccent),
               title: Text("Language".toUpperCase(),
@@ -185,10 +186,10 @@ class _HomeState extends State<Home> {
                 textCapitalization: TextCapitalization.sentences,
                 controller: controllerTextWordSearch,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 17,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   filled: true,
                 ),
                 onEditingComplete: () {
@@ -207,7 +208,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w700,
                       color: textAccent))),
           loadingHistory
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Column(
                   children: [
                     ListView.separated(
@@ -218,7 +219,7 @@ class _HomeState extends State<Home> {
                           height: 0,
                         ),
                       ),
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: history.length,
                       itemBuilder: (context, index) {

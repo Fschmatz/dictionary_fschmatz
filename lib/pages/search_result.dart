@@ -41,11 +41,11 @@ class _SearchResultState extends State<SearchResult> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Search Results"),
+        title: const Text("Search Results"),
         elevation: 0,
       ),
       body: AnimatedSwitcher(
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
         child: ListView(
           children: [
             showTextFromJson(searchedWordData!.word,'Word', styleTextWithColor, false),

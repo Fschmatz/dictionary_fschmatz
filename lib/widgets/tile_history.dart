@@ -1,4 +1,4 @@
-import 'package:dictionary_fschmatz/pages/searchResult.dart';
+import 'package:dictionary_fschmatz/pages/search_result.dart';
 import 'package:flutter/material.dart';
 
 class TileHistory extends StatefulWidget {

@@ -4,16 +4,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 //CLARO
 ThemeData light = ThemeData(
   brightness: Brightness.light,
-  primaryColor: Color(0xFFFFFFFF),
+  primaryColor: const Color(0xFFFFFFFF),
   accentColor: Colors.lightGreen[700],
-  scaffoldBackgroundColor: Color(0xFFFFFFFF),
-  cardTheme: CardTheme(
+  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+  appBarTheme: const AppBarTheme(
+      color: Color(0xFFFFFFFF),
+      elevation: 0,
+      iconTheme: IconThemeData(
+          color: Color(0xFF000000)
+      ),
+      titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF000000))),
+  cardTheme: const CardTheme(
     color: Color(0xFFF1F1F1),
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
     backgroundColor: Color(0xFFF9F9F9),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: Colors.deepPurple),
     selectedLabelStyle: TextStyle(color: Colors.deepPurple),
     showSelectedLabels: false,
@@ -21,9 +31,9 @@ ThemeData light = ThemeData(
     backgroundColor: Color(0xFFE5E5E5),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFFF1F1F1),
+      fillColor: const Color(0xFFF1F1F1),
       focusColor: Colors.lightGreen[700],
-      contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: Colors.lightGreen[700]!,
@@ -31,55 +41,62 @@ ThemeData light = ThemeData(
         borderRadius: BorderRadius.circular(25.0),
       ),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(25.0)),
       border: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(25.0))),
   accentTextTheme: TextTheme(
     headline1: TextStyle(color: Colors.lightGreen[700]),
-    headline2: TextStyle(color: Color(0xFFF1F1F1)),
+    headline2: const TextStyle(color: Color(0xFFF1F1F1)),
   ),
-  bottomAppBarColor: Color(0xFFE6E6E6),
+  bottomAppBarColor: const Color(0xFFE6E6E6),
 );
 
 //ESCURO
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
-  primaryColor: Color(0xFF202022),
-  accentColor: Color(0xFF76AC5B),
-  scaffoldBackgroundColor: Color(0xFF202022),
-  cardTheme: CardTheme(
+  primaryColor: const Color(0xFF202022),
+  accentColor: const Color(0xFF76AC5B),
+  scaffoldBackgroundColor: const Color(0xFF202022),
+  appBarTheme: const AppBarTheme(
+      color: Color(0xFF202022),
+      elevation: 0,
+      titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFFFFFFFF))),
+  cardTheme: const CardTheme(
     color: Color(0xFF303032),
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
     backgroundColor: Color(0xFF303032),
   ),
   inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFF303032),
-      focusColor: Color(0xFF76AC5B),
-      contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      fillColor: const Color(0xFF303032),
+      focusColor: const Color(0xFF76AC5B),
+      contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           color: Color(0xFF76AC5B),
         ),
         borderRadius: BorderRadius.circular(25.0),
       ),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(25.0)),
       border: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.transparent,
           ),
           borderRadius: BorderRadius.circular(25.0))),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: Color(0xFFA590D5)),
     selectedLabelStyle: TextStyle(color: Color(0xFFA590D5)),
     showSelectedLabels: false,
@@ -87,8 +104,8 @@ ThemeData dark = ThemeData(
     backgroundColor: Color(0xFF151517),
   ),
 
-  bottomAppBarColor: Color(0xFF151517),
-  accentTextTheme: TextTheme(
+  bottomAppBarColor: const Color(0xFF151517),
+  accentTextTheme: const TextTheme(
     headline1: TextStyle(color: Color(0xFFA1CF8A)),
     headline2: TextStyle(color: Color(0xFF000000)),
   ),

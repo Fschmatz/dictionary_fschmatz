@@ -1,10 +1,10 @@
 class Changelog{
 
-  static String appVersion = "1.2.1";
+  static String appVersion = "1.2.2";
   static String appName = "Dictionary Fschmatz";
 
   static String changelogCurrent = '''  
-1.2.1
+1.2.2
 - Added Synonyms
 - Bug Fixes
 - Removed PT-BR (API Changes)
