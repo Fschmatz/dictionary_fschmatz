@@ -13,15 +13,28 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final Color bottomOverlayColor =
+    Theme.of(context).bottomNavigationBarTheme.backgroundColor!;
+    final Color topOverlayColor =
+    Theme.of(context).appBarTheme.backgroundColor!;
+    final Brightness iconBrightness =
+    Theme.of(context).brightness == Brightness.light
+        ? Brightness.dark
+        : Brightness.light;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light.copyWith(
-          systemNavigationBarColor: Colors.transparent,
+        value: SystemUiOverlayStyle(
+          statusBarIconBrightness: iconBrightness,
+          systemNavigationBarColor: bottomOverlayColor,
+          statusBarColor: topOverlayColor,
+          systemStatusBarContrastEnforced: false,
+          systemNavigationBarIconBrightness: iconBrightness,
         ),
-        child: const Home());
+        child: SafeArea(child: const Home()));
   }
 }

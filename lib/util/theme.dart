@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-//CLARO
 ThemeData light = ThemeData(
   brightness: Brightness.light,
   primaryColor: const Color(0xFFFFFFFF),
-  accentColor: Colors.lightGreen[700],
+  snackBarTheme: SnackBarThemeData(
+    actionTextColor: Colors.green.shade700,
+  ),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+  colorScheme: ColorScheme.light(
+      background: const Color(0xFFF0F2F2),
+      primary: Colors.green.shade700,
+      secondary: Colors.green.shade700),
   appBarTheme: const AppBarTheme(
       color: Color(0xFFFFFFFF),
       elevation: 0,
-      iconTheme: IconThemeData(
-          color: Color(0xFF000000)
-      ),
+      iconTheme: IconThemeData(color: Color(0xFF050505)),
       titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFF000000))),
+          fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFF000000))),
   cardTheme: const CardTheme(
     color: Color(0xFFF1F1F1),
   ),
@@ -24,16 +24,15 @@ ThemeData light = ThemeData(
     backgroundColor: Color(0xFFF9F9F9),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedIconTheme: IconThemeData(color: Colors.deepPurple),
-    selectedLabelStyle: TextStyle(color: Colors.deepPurple),
     showSelectedLabels: false,
     showUnselectedLabels: false,
-    backgroundColor: Color(0xFFE5E5E5),
+    backgroundColor: Color(0xFFFFFFFF),
   ),
   inputDecorationTheme: InputDecorationTheme(
       fillColor: const Color(0xFFF1F1F1),
       focusColor: Colors.lightGreen[700],
-      contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: Colors.lightGreen[700]!,
@@ -57,19 +56,24 @@ ThemeData light = ThemeData(
   bottomAppBarColor: const Color(0xFFE6E6E6),
 );
 
-//ESCURO
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   primaryColor: const Color(0xFF202022),
-  accentColor: const Color(0xFF76AC5B),
+  snackBarTheme: const SnackBarThemeData(
+    backgroundColor: Color(0xFFF0F0F0),
+    actionTextColor: Color(0xFF76AC5B),
+  ),
   scaffoldBackgroundColor: const Color(0xFF202022),
+  colorScheme: const ColorScheme.dark(
+      background: Color(0xFF1C1C1D),
+      primary: Color(0xFF76AC5B),
+      secondary: Color(0xFF76AC5B)),
   appBarTheme: const AppBarTheme(
       color: Color(0xFF202022),
       elevation: 0,
+      iconTheme: IconThemeData(color: Color(0xFFF5F5F5)),
       titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFFFFFFFF))),
+          fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFFFFFFFF))),
   cardTheme: const CardTheme(
     color: Color(0xFF303032),
   ),
@@ -79,7 +83,8 @@ ThemeData dark = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
       fillColor: const Color(0xFF303032),
       focusColor: const Color(0xFF76AC5B),
-      contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: Color(0xFF76AC5B),
@@ -101,46 +106,11 @@ ThemeData dark = ThemeData(
     selectedLabelStyle: TextStyle(color: Color(0xFFA590D5)),
     showSelectedLabels: false,
     showUnselectedLabels: false,
-    backgroundColor: Color(0xFF151517),
+    backgroundColor: Color(0xFF202022),
   ),
-
   bottomAppBarColor: const Color(0xFF151517),
   accentTextTheme: const TextTheme(
     headline1: TextStyle(color: Color(0xFFA1CF8A)),
     headline2: TextStyle(color: Color(0xFF000000)),
   ),
 );
-
-class ThemeNotifier extends ChangeNotifier {
-  final String key = 'valorTema';
-  late SharedPreferences prefs;
-  late bool _darkTheme;
-
-  bool get darkTheme => _darkTheme;
-
-  ThemeNotifier() {
-    _darkTheme = true;
-    _loadFromPrefs();
-  }
-
-  toggleTheme() {
-    _darkTheme = !_darkTheme;
-    _saveToPrefs();
-    notifyListeners();
-  }
-
-  _initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  _loadFromPrefs() async {
-    await _initPrefs();
-    _darkTheme = prefs.getBool(key) ?? true;
-    notifyListeners();
-  }
-
-  _saveToPrefs() async {
-    await _initPrefs();
-    prefs.setBool(key, _darkTheme);
-  }
-}

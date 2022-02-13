@@ -7,7 +7,6 @@ import 'package:dictionary_fschmatz/db/historyDao.dart';
 import 'package:dictionary_fschmatz/pages/search_result.dart';
 import 'package:dictionary_fschmatz/widgets/tile_history.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,7 +42,21 @@ class _HomeState extends State<Home> {
       loadingSearch = true;
     });
 
-    final response = await http.get(Uri.parse(urlApi  + lang + '/' + word));
+    final response = await http.get(Uri.parse(urlApi  + lang + '/' + word)).timeout(const Duration(seconds: 10), onTimeout: () {
+      throw ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text('Loading Error'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        action: SnackBarAction(
+          label: 'RETRY',
+          onPressed: () {
+            _searchWord(lang, word, fromHistory);
+          },
+        ),
+      ));
+    });
     if (response.statusCode == 200) {
       Word wordData = Word.fromJSON(jsonDecode(response.body));
       if(!fromHistory){_saveWordToHistory();}
@@ -99,7 +112,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
+    Color? textAccent = Theme.of(context).colorScheme.primary;
 
     return GestureDetector(
       onTap: () {
@@ -114,9 +127,9 @@ class _HomeState extends State<Home> {
                   ? LinearProgressIndicator(
                       minHeight: 3,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).accentColor.withOpacity(0.8)),
+                          Theme.of(context).colorScheme.primary.withOpacity(0.8)),
                       backgroundColor:
-                          Theme.of(context).accentColor.withOpacity(0.3),
+                          Theme.of(context).colorScheme.primary.withOpacity(0.3),
                     )
                   : const SizedBox(height: 3,)),
           actions: [
@@ -134,7 +147,7 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => SettingsPage(),
+                        builder: (BuildContext context) => const SettingsPage(),
                         fullscreenDialog: true,
                       ));
                 }),
@@ -152,7 +165,7 @@ class _HomeState extends State<Home> {
             radius: 25,
             padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
             backgroundColor: Theme.of(context).cardTheme.color,
-            foregroundColor: Theme.of(context).accentColor.withOpacity(0.8),
+            foregroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
             elevation: 0,
             borderWidth: 1,
             borderColor: Colors.transparent,
@@ -215,7 +228,7 @@ class _HomeState extends State<Home> {
                       separatorBuilder: (BuildContext context, int index) =>
                           Visibility(
                         visible: history[index]['word'] != ' ',
-                        child: const Divider(
+                        child: const SizedBox(
                           height: 0,
                         ),
                       ),

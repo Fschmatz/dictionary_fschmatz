@@ -35,7 +35,7 @@ class _SearchResultState extends State<SearchResult> {
 
   @override
   Widget build(BuildContext context) {
-    Color? textAccent = Theme.of(context).accentTextTheme.headline1!.color;
+    Color? textAccent = Theme.of(context).colorScheme.primary;
     TextStyle styleTextWithColor =
         TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textAccent);
 

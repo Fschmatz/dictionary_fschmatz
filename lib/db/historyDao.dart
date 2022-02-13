@@ -5,13 +5,13 @@ import 'package:path_provider/path_provider.dart';
 
 class HistoryDao {
 
-  static final _databaseName = 'Dictionary.db';
-  static final _databaseVersion = 1;
+  static const _databaseName = 'Dictionary.db';
+  static const _databaseVersion = 1;
 
-  static final table = 'wordHistory';
-  static final columnId = 'id';
-  static final columnWord = 'word';
-  static final columnLanguage = 'language';
+  static const table = 'wordHistory';
+  static const columnId = 'id';
+  static const columnWord = 'word';
+  static const columnLanguage = 'language';
 
   static Database? _database;
   Future<Database> get database async =>
