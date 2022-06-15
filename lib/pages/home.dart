@@ -28,8 +28,7 @@ class _HomeState extends State<Home> {
   bool loadingSearch = false;
   bool loadingHistory = true;
   Word? searchedWordData;
-  TextStyle styleButtonsLang =
-      const TextStyle(fontSize: 13);
+  TextStyle styleButtonsLang = const TextStyle(fontSize: 13);
 
   @override
   void initState() {
@@ -37,12 +36,14 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  Future<void> _searchWord(String lang, String word,bool fromHistory) async {
+  Future<void> _searchWord(String lang, String word, bool fromHistory) async {
     setState(() {
       loadingSearch = true;
     });
 
-    final response = await http.get(Uri.parse(urlApi  + lang + '/' + word)).timeout(const Duration(seconds: 10), onTimeout: () {
+    final response = await http
+        .get(Uri.parse(urlApi + lang + '/' + word))
+        .timeout(const Duration(seconds: 10), onTimeout: () {
       throw ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         behavior: SnackBarBehavior.floating,
         content: const Text('Loading Error'),
@@ -59,7 +60,9 @@ class _HomeState extends State<Home> {
     });
     if (response.statusCode == 200) {
       Word wordData = Word.fromJSON(jsonDecode(response.body));
-      if(!fromHistory){_saveWordToHistory();}
+      if (!fromHistory) {
+        _saveWordToHistory();
+      }
       setState(() {
         searchedWordData = wordData;
         loadingSearch = false;
@@ -67,10 +70,9 @@ class _HomeState extends State<Home> {
       //OPEN SEARCH RESULTS
       Navigator.push(
               context,
-              MaterialPageRoute<void>(
+              MaterialPageRoute(
                 builder: (BuildContext context) =>
                     SearchResult(searchedWord: searchedWordData!),
-                fullscreenDialog: true,
               ))
           .then((value) =>
               {_getWordHistory(), controllerTextWordSearch.text = ''});
@@ -114,147 +116,132 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Color? textAccent = Theme.of(context).colorScheme.primary;
 
-    return GestureDetector(
-      onTap: () {
-        _loseFocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Dictionary Fschmatz'),
-          bottom: PreferredSize(
-              preferredSize: const Size(double.infinity, 3),
-              child: loadingSearch
-                  ? LinearProgressIndicator(
-                      minHeight: 3,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.primary.withOpacity(0.8)),
-                      backgroundColor:
-                          Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                    )
-                  : const SizedBox(height: 3,)),
-          actions: [
-            IconButton(
-                color: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .color!
-                    .withOpacity(0.8),
-                icon: const Icon(
-                  Icons.settings_outlined,
-                ),
-                onPressed: () {
-                  _loseFocus();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const SettingsPage(),
-                        fullscreenDialog: true,
-                      ));
-                }),
-          ],
-        ),
-        body: ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
-          ListTile(
-              leading: Icon(Icons.language_outlined, color: textAccent),
-              title: Text("Language".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: textAccent))),
-          AnimatedButtonBar(
-            radius: 25,
-            padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
-            backgroundColor: Theme.of(context).cardTheme.color,
-            foregroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
-            elevation: 0,
-            borderWidth: 1,
-            borderColor: Colors.transparent,
-            innerVerticalPadding: 18.1,
-            children: [
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'en_US',
-                  child: Text('EN-US', style: styleButtonsLang)),
-              /*ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'pt-BR',
-                  child: Text('PT-BR', style: styleButtonsLang)),*/
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'es',
-                  child: Text('ES', style: styleButtonsLang)),
-              ButtonBarEntry(
-                  onTap: () => selectedLanguage = 'fr',
-                  child: Text('FR', style: styleButtonsLang)),
-            ],
-          ),
-          ListTile(
-              leading: Icon(Icons.search_outlined, color: textAccent),
-              title: Text("Search Word".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: textAccent))),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
-            child: TextField(
-                minLines: 1,
-                textCapitalization: TextCapitalization.sentences,
-                controller: controllerTextWordSearch,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 17,
-                ),
-                decoration: const InputDecoration(
-                  filled: true,
-                ),
-                onEditingComplete: () {
-                  if (controllerTextWordSearch.text.isNotEmpty) {
-                    _loseFocus();
-                    _searchWord(
-                        selectedLanguage, controllerTextWordSearch.text,false);
-                  }
-                }),
-          ),
-          ListTile(
-              leading: Icon(Icons.history_outlined, color: textAccent),
-              title: Text("History".toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: textAccent))),
-          loadingHistory
-              ? const SizedBox.shrink()
-              : Column(
-                  children: [
-                    ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Visibility(
-                        visible: history[index]['word'] != ' ',
-                        child: const SizedBox(
-                          height: 0,
-                        ),
-                      ),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: history.length,
-                      itemBuilder: (context, index) {
-                        return Visibility(
-                          visible: history[index]['word'] != ' ',
-                          child: TileHistory(
-                            key: UniqueKey(),
-                            word: history[index]['word'],
-                            language: history[index]['language'],
-                            loseFocus: _loseFocus,
-                            search: _searchWord,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-          const SizedBox(
-            height: 50,
-          )
-        ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dictionary'),
+        bottom: PreferredSize(
+            preferredSize: const Size(double.infinity, 3),
+            child: loadingSearch
+                ? LinearProgressIndicator(
+                    minHeight: 3,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).colorScheme.primary.withOpacity(0.8)),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  )
+                : const SizedBox(
+                    height: 3,
+                  )),
+        actions: [
+          IconButton(
+              icon: const Icon(
+                Icons.settings_outlined,
+              ),
+              onPressed: () {
+                _loseFocus();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SettingsPage(),
+                    ));
+              }),
+        ],
       ),
+      body: ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
+        /*ListTile(
+            leading: Icon(Icons.language_outlined, color: textAccent),
+            title: Text("Language".toUpperCase(),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: textAccent))),
+        AnimatedButtonBar(
+          radius: 25,
+          padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+          backgroundColor: Theme.of(context).cardTheme.color,
+          foregroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+          elevation: 0,
+          borderWidth: 1,
+          borderColor: Colors.transparent,
+          innerVerticalPadding: 18.1,
+          children: [
+            ButtonBarEntry(
+                onTap: () => selectedLanguage = 'en_US',
+                child: Text('EN-US', style: styleButtonsLang)),
+            */ /*ButtonBarEntry(
+                onTap: () => selectedLanguage = 'pt-BR',
+                child: Text('PT-BR', style: styleButtonsLang)),*/ /*
+            ButtonBarEntry(
+                onTap: () => selectedLanguage = 'es',
+                child: Text('ES', style: styleButtonsLang)),
+            ButtonBarEntry(
+                onTap: () => selectedLanguage = 'fr',
+                child: Text('FR', style: styleButtonsLang)),
+          ],
+        ),*/
+        /*ListTile(
+            leading: Icon(Icons.search_outlined, color: textAccent),
+            title: Text("Search Word",
+                style: TextStyle(
+                    fontSize: 16,
+                    //fontWeight: FontWeight.w700,
+                    color: textAccent))),*/
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: TextField(
+              minLines: 1,
+              textCapitalization: TextCapitalization.sentences,
+              controller: controllerTextWordSearch,
+              decoration: const InputDecoration(
+                labelText: 'Search',
+              ),
+              onEditingComplete: () {
+                if (controllerTextWordSearch.text.isNotEmpty) {
+                  _loseFocus();
+                  _searchWord(
+                      selectedLanguage, controllerTextWordSearch.text, false);
+                }
+              }),
+        ),
+        ListTile(
+            leading: Icon(Icons.history_outlined, color: textAccent),
+            title: Text("History",
+                style: TextStyle(
+                    fontSize: 16,
+                    //fontWeight: FontWeight.w700,
+                    color: textAccent))),
+        loadingHistory
+            ? const SizedBox.shrink()
+            : Column(
+                children: [
+                  ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Visibility(
+                      visible: history[index]['word'] != ' ',
+                      child: const SizedBox.shrink(),
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: history.length,
+                    itemBuilder: (context, index) {
+                      return Visibility(
+                        visible: history[index]['word'] != ' ',
+                        child: TileHistory(
+                          key: UniqueKey(),
+                          word: history[index]['word'],
+                          language: history[index]['language'],
+                          loseFocus: _loseFocus,
+                          search: _searchWord,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+        const SizedBox(
+          height: 50,
+        )
+      ]),
     );
   }
 }

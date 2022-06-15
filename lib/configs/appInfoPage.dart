@@ -17,7 +17,6 @@ class AppInfoPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("App Info"),
-          elevation: 0,
         ),
         body: ListView(children: <Widget>[
           const SizedBox(height: 20),
@@ -38,64 +37,40 @@ class AppInfoPage extends StatelessWidget {
                     color: accentText)),
           ),
           const SizedBox(height: 15),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Dev".toUpperCase(),
+            title: Text("Dev",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: accentText)),
           ),
           const ListTile(
             leading: Icon(Icons.info_outline),
             title: Text(
-              "HAMMERED AND REDONE: 0 Times !!!",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: SizedBox(
-              height: 0.1,
-            ),
-            title: Text(
               "Application created using Flutter and the Dart language, used for testing and learning.",
-              style: TextStyle(
-                fontSize: 16,
-              ),
             ),
           ),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Source Code".toUpperCase(),
+            title: Text("Source Code",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: accentText)),
           ),
           ListTile(
-            onTap: () {_launchGithub();},
+            onTap: () {
+              _launchGithub();
+            },
             leading: const Icon(Icons.open_in_new_outlined),
             title: const Text("View on GitHub",
                 style: TextStyle(
                     decoration: TextDecoration.underline, color: Colors.blue)),
           ),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Quote".toUpperCase(),
+            title: Text("Quote",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: accentText)),
           ),
           const ListTile(
@@ -108,10 +83,11 @@ class AppInfoPage extends StatelessWidget {
               'The mind that is not baffled is not employed.\n'
               'The impeded stream is the one that sings.\n\n'
               'Wendell Berry',
-              style: TextStyle(fontSize: 16),
             ),
           ),
-          const SizedBox(height: 50,)
+          const SizedBox(
+            height: 50,
+          )
         ]));
   }
 }

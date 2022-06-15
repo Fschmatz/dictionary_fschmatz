@@ -6,23 +6,18 @@ class ChangelogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Color? accentText = Theme.of(context).colorScheme.primary;
 
     return Scaffold(
         appBar: AppBar(
           title: const Text("Changelog"),
-          elevation: 0,
         ),
         body: ListView(children: <Widget>[
           ListTile(
-              leading: const SizedBox(
-                height: 0.1,
-              ),
-              title: Text("Current Version".toUpperCase(),
+              title: Text("Current Version",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: accentText))),
           ListTile(
             leading: const Icon(
@@ -30,18 +25,13 @@ class ChangelogPage extends StatelessWidget {
             ),
             title: Text(
               Changelog.changelogCurrent,
-              style: const TextStyle(fontSize: 16),
             ),
           ),
-          const Divider(),
           ListTile(
-            leading: const SizedBox(
-              height: 0.1,
-            ),
-            title: Text("Previous Versions".toUpperCase(),
+            title: Text("Previous Versions",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: accentText)),
           ),
           ListTile(
@@ -50,7 +40,6 @@ class ChangelogPage extends StatelessWidget {
             ),
             title: Text(
               Changelog.changelogsOld,
-              style: const TextStyle(fontSize: 16),
             ),
           ),
         ]));

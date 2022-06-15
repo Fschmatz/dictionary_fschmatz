@@ -1,56 +1,60 @@
 class Changelog{
 
-  static String appVersion = "1.3.0";
+  static String appVersion = "1.4.0";
   static String appName = "Dictionary Fschmatz";
 
   static String changelogCurrent = '''  
-1.3.0
-- Added System Theme
-- Bug Fixes
+1.4.0
+- API changes (only English now)
+- Flutter
 ''';
 
   static String changelogsOld = '''
+1.3.0
+- Added system theme
+- Bug fixes
+
 1.2.2
-- Added Synonyms
-- Bug Fixes
-- Removed PT-BR (API Changes)
+- Added synonyms
+- Bug fixes
+- Removed PT-BR (API changes)
 
 1.1.1
 - Added French
 - Added Spanish
-- Small UI Changes
-- Don't Save Invalid Words on History
+- Small UI changes
+- Don't save invalid words on history
 
 1.0.0
-- Technically Usable
+- Technically usable
 
 0.7.0
-- New Home
-- Change Language
+- New home
+- Change language
 
 0.6.0
-- Added Language to DB
-- Removed Modal Bottom
+- Added language to DB
+- Removed modal bottom
 
 0.5.0
-- Test Results UI
-- Open History Word onTap
+- Test results UI
+- Open history word onTap
 
 0.4.0
-- DB History
-- History on Home
+- DB history
+- History on home
 
 0.3.0
-- Experimental ENG Search OK 
+- Experimental ENG search OK 
 - Json OK
-- Results Page
+- Results page
 
 0.2.0
 - Home OK
-- Bottom Sheet with Search
+- Bottom sheet with search
 
 0.1.0
-- App Start 
+- App start 
 ''';
 
 }

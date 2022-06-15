@@ -16,22 +16,24 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
-  String getThemeStringFormatted(){
-    String theme =  EasyDynamicTheme.of(context).themeMode.toString().replaceAll('ThemeMode.', '');
-    if(theme == 'system'){theme = 'system default';}
+  String getThemeStringFormatted() {
+    String theme = EasyDynamicTheme.of(context)
+        .themeMode
+        .toString()
+        .replaceAll('ThemeMode.', '');
+    if (theme == 'system') {
+      theme = 'system default';
+    }
     return capitalizeFirstLetterString(theme);
   }
 
   @override
   Widget build(BuildContext context) {
-
     Color? accent = Theme.of(context).colorScheme.primary;
 
     return Scaffold(
         appBar: AppBar(
           title: const Text("Settings"),
-          elevation: 0,
         ),
         body: ListView(
           children: <Widget>[
@@ -50,16 +52,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            const Divider(),
             ListTile(
-              leading: const SizedBox(height: 0.1,),
-              title:    Text(
-                  "General".toUpperCase(),
+              title: Text("General",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: accent)
-              ),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: accent)),
             ),
             ListTile(
               onTap: () => showDialog(
@@ -69,43 +67,33 @@ class _SettingsPageState extends State<SettingsPage> {
                   }),
               leading: const Icon(Icons.brightness_6_outlined),
               title: const Text(
-                "App Theme",
-                style: TextStyle(fontSize: 16),
+                "App theme",
               ),
               subtitle: Text(
                 getThemeStringFormatted(),
               ),
             ),
-            const Divider(),
             ListTile(
-              leading: const SizedBox(height: 0.1,),
-              title:    Text(
-                  "About".toUpperCase(),
+              title: Text("About",
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: accent)
-              ),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: accent)),
             ),
             ListTile(
               leading: const Icon(
                 Icons.info_outline,
               ),
               title: const Text(
-                "App Info",
-                style: TextStyle(fontSize: 16),
+                "App info",
               ),
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
+                    MaterialPageRoute(
                       builder: (BuildContext context) => const AppInfoPage(),
-                      fullscreenDialog: true,
                     ));
               },
-            ),
-            const SizedBox(
-              height: 10.0,
             ),
             ListTile(
               leading: const Icon(
@@ -113,14 +101,12 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               title: const Text(
                 "Changelog",
-                style: TextStyle(fontSize: 16),
               ),
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
+                    MaterialPageRoute(
                       builder: (BuildContext context) => const ChangelogPage(),
-                      fullscreenDialog: true,
                     ));
               },
             ),

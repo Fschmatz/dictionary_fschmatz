@@ -20,13 +20,12 @@ class _SearchResultState extends State<SearchResult> {
   }
 
   Widget showTextFromJson(
-      String text,String sectionName, TextStyle textWithColor, bool showDivider) {
+      String text,String sectionName, TextStyle textWithColor) {
     return Visibility(
       visible: text.isNotEmpty && text != 'null',
       child: Column(
         children: [
-          Visibility(visible: showDivider, child: const Divider()),
-          ListTile(title: Text(sectionName.toUpperCase(), style: textWithColor)),
+          ListTile(title: Text(sectionName, style: textWithColor)),
           ListTile(title: Text(text)),
         ],
       ),
@@ -37,7 +36,7 @@ class _SearchResultState extends State<SearchResult> {
   Widget build(BuildContext context) {
     Color? textAccent = Theme.of(context).colorScheme.primary;
     TextStyle styleTextWithColor =
-        TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textAccent);
+        TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textAccent);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,17 +47,17 @@ class _SearchResultState extends State<SearchResult> {
         duration: const Duration(milliseconds: 600),
         child: ListView(
           children: [
-            showTextFromJson(searchedWordData!.word,'Word', styleTextWithColor, false),
+            showTextFromJson(searchedWordData!.word,'Word', styleTextWithColor ),
             showTextFromJson(
-                searchedWordData!.phoneticsText,'Phonetics', styleTextWithColor, true),
+                searchedWordData!.phoneticsText,'Phonetics', styleTextWithColor),
             showTextFromJson(
-                searchedWordData!.meaningsPartOfSpeech,'Part of Speech', styleTextWithColor, true),
+                searchedWordData!.meaningsPartOfSpeech,'Part of Speech', styleTextWithColor),
             showTextFromJson(
-                searchedWordData!.meaningsDefinitions,'Definitions', styleTextWithColor, true),
+                searchedWordData!.meaningsDefinitions,'Definitions', styleTextWithColor),
             showTextFromJson(searchedWordData!.meaningsDefinitionsExample,'Definition Example',
-                styleTextWithColor, true),//synonyms
+                styleTextWithColor),//synonyms
             showTextFromJson(searchedWordData!.formattedSynonymsList().toString(),'Synonyms',
-                styleTextWithColor, true),
+                styleTextWithColor),
             const SizedBox(height: 50,)
           ],
         ),
